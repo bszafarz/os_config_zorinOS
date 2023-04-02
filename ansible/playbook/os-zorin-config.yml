@@ -1,0 +1,10 @@
+---
+- name: Ensure standard configuration
+  hosts: localhost
+  connection: local
+  #  become: true
+
+  roles:
+    - role: os_add_user_to_sudoers
+      oauts_user: dszafarz
+    - role: os_set_up_locales

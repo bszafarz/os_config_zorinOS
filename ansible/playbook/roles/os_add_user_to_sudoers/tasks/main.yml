@@ -1,0 +1,20 @@
+---
+- name: Check if the sudo user related file exists for {{ oauts_user }}
+  ansible.builtin.stat:
+    path: /etc/sudoers.d/{{ oauts_user }}
+  register: file_stats
+
+- name: Create sudo access file for {{ oauts_user }}
+  become: true
+  ansible.builtin.file:
+    path: /etc/sudoers.d/{{ oauts_user }}
+    state: touch
+    mode: '0440'
+  when: not file_stats.stat.exists
+
+- name: Add paswordless sudo access for user {{ oauts_user }}
+  become: true
+  copy:
+    dest: /etc/sudoers.d/{{ oauts_user }}
+    content: "{{ oauts_user }}  ALL=(ALL) NOPASSWD:ALL"
+  when: not file_stats.stat.exists

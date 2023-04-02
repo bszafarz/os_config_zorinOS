@@ -1,0 +1,19 @@
+---
+- name: Ensure locales are installed
+  become: true
+  #to use that module isntall it ansible-galaxy collection install community.general
+  community.general.locale_gen:
+    name:  "{{ item }}"
+    state: present
+  loop: "{{ osul_locales_to_install }}"
+
+- name: Ensure locales are configured
+  become: true
+  ansible.builtin.template:
+    src: locale.j2
+    dest: /etc/default/locale
+    force: True # not required. Determine when the file is being transferred if the destination already exists. When set to C(yes), replace the remote file when contents are different than the source. When set to C(no), the file will only be transferred if the destination does not exist.
+    backup: true
+    mode: '644'
+    owner: root
+    group: root

@@ -58,10 +58,10 @@ else
     exit 5
 fi
 
-print_step "STEP 7: Install ansible module"
+print_step "STEP 6: Install ansible module"
 if ansible-galaxy collection install community.general > /dev/null 2>&1; then
     log_OK "install ansible module: community.general"
 else
     log_NOK "install ansible module: community.general"
-    exit 7
+    exit 6
 fi

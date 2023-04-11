@@ -25,7 +25,7 @@ else
 fi
 
 print_step "STEP 2: Install packages"
-for package in "tree" "vim" "python3-pip" "htop" "build-essential" "vlc" "tldr" "libreoffice-common"; do
+for package in "tree" "vim" "python3-pip" "htop" "build-essential" "vlc" "tldr" "libreoffice-common" "neofetch"; do
     if apt install -y $package > /dev/null 2>&1; then
         log_OK "Install: $package"
     else
@@ -52,7 +52,7 @@ fi
 print_step "STEP 5: Check ansible version as $(whoami)"
 if ansible --version > /dev/null 2>&1; then
     ver=$(ansible --version | head -n1 | cut -d [ -f 2 | tr -d ])
-    log_OK "ansible version: $ver"
+    log_OK "Ansible version: $ver"
 else
     log_NOK "Could not get ansible version"
     exit 5
@@ -60,8 +60,8 @@ fi
 
 print_step "STEP 6: Install ansible module"
 if ansible-galaxy collection install community.general > /dev/null 2>&1; then
-    log_OK "install ansible module: community.general"
+    log_OK "Install ansible module: community.general"
 else
-    log_NOK "install ansible module: community.general"
+    log_NOK "Install ansible module: community.general"
     exit 6
 fi
